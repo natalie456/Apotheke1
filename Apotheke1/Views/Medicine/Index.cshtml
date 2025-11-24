@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Apotheke1.Entity.Models.Medicine>
+<style>
+    body {
+        background-color: #C9F7FF;
+        font-family: Arial, sans-serif;
+    }
+
+    .logo {
+        font-size: 32px;
+        font-weight: bold;
+        color: #0a4d63;
+        margin-bottom: 20px;
+    }
+
+    .container-custom {
+        display: flex;
+        gap: 20px;
+    }
+
+    .filters {
+        width: 220px;
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .products {
+        flex-grow: 1;
+    }
+
+    .medicine-card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+        background-color: #0a4d63;
+        border: none;
+    }
+</style>
+
+<div class="logo">apotheke</div>
+
+<div class="container-custom">
+
+    <!-- LEFT FILTERS -->
+    <div class="filters">
+        <form method="get">
+            <h4>Фільтри</h4>
+
+            <label>Назва</label>
+            <input type="text" name="search" class="form-control" value="@ViewBag.Search" />
+
+            <label class="mt-2">Категорія</label>
+            <select class="form-control" name="categoryId">
+                <option value="">Всі</option>
+                @foreach (var c in ViewBag.Categories)
+                {
+                    <option value="@c.Id">@c.Name</option>
+                }
+            </select>
+
+            <label class="mt-2">Постачальник</label>
+            <select class="form-control" name="supplierId">
+                <option value="">Всі</option>
+                @foreach (var s in ViewBag.Suppliers)
+                {
+                    <option value="@s.Id">@s.Name</option>
+                }
+            </select>
+
+            <button class="btn btn-primary mt-3 w-100">Застосувати</button>
+        </form>
+    </div>
+
+    <!-- RIGHT MEDICINE LIST -->
+    <div class="products">
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Ліки</h3>
+            <a class="btn btn-primary" href="/Medicine/Create">Додати</a>
+        </div>
+
+        @foreach (var m in Model)
+        {
+            <div class="medicine-card">
+                <h5>@m.Name</h5>
+
+                <p><strong>Категорія:</strong> @(m.Category?.Name ?? "Невідома")</p>
+
+                <p><strong>Постачальник:</strong> @(m.Supplier?.Name ?? "Невідомий")</p>
+
+                <p><strong>Ціна:</strong> @m.Price грн</p>
+
+                <a class="btn btn-primary btn-sm" href="/Medicine/Edit/@m.Id">Редагувати</a>
+            </div>
+        }
+    </div>
+</div>
