@@ -58,6 +58,7 @@
             <label class="mt-2">Категорія</label>
             <select class="form-control" name="categoryId">
                 <option value="">Всі</option>
+
                 @foreach (var c in ViewBag.Categories)
                 {
                     <option value="@c.Id">@c.Name</option>
@@ -90,13 +91,27 @@
                 <h5>@m.Name</h5>
 
                 <p><strong>Категорія:</strong> @(m.Category?.Name ?? "Невідома")</p>
-
                 <p><strong>Постачальник:</strong> @(m.Supplier?.Name ?? "Невідомий")</p>
-
                 <p><strong>Ціна:</strong> @m.Price грн</p>
 
-                <a class="btn btn-primary btn-sm" href="/Medicine/Edit/@m.Id">Редагувати</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary btn-sm"
+                       asp-action="Edit"
+                       asp-route-id="@m.Id">
+                        Редагувати
+                    </a>
+
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@m.Id" />
+                        <button class="btn btn-danger btn-sm" type="submit">
+                            Видалити
+                        </button>
+                    </form>
+                }
             </div>
         }
+
     </div>
 </div>
+

@@ -16,7 +16,8 @@ namespace Apotheke1.Services
         {
             _db = db;
         }
-
+        public IQueryable<Medicine> Query() =>  _db.Medicines.AsQueryable();
+        
 
         public async Task<List<Medicine>> GetAllAsync() =>
             await _db.Medicines

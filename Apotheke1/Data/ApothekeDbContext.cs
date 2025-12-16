@@ -1,9 +1,12 @@
 ﻿using Apotheke1.Entity.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
 namespace Apotheke1.Data
 {
-    public class ApothekeDbContext : DbContext
+    public class ApothekeDbContext : IdentityDbContext<IdentityUser>
     {
         public ApothekeDbContext(DbContextOptions<ApothekeDbContext> options) : base(options) { }
 
